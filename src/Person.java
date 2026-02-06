@@ -8,7 +8,7 @@ public class Person {
     // Fields (Instance Variables)
     private String firstName;
     private String lastName;
-    private final int IDNum;  // ID should never change sequence of digits
+    private String IDNum;  // ID should never change sequence of digits
     private String title;   // Prefix (Mr., Mrs., Prof., Dr., etc.)
     private int YOB;        // Year of birth (should be between 1940 and 2010)
 
@@ -24,13 +24,13 @@ public class Person {
      * @param YOB The year of birth of the person.
      * @throws IllegalArgumentException If YOB is outside the range 1940-2010.
      */
-    public Person(String firstName, String lastName, String title, int YOB, int IDNum)
+    public Person(String IDNum, String firstName, String lastName, String title, int YOB)
     {
+        this.IDNum = IDNum;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.IDNum = IDNum;    // Assign the passed ID
         this.title = title;
-        setYOB(YOB);  // Ensure valid year range
+        setYOB(YOB);
     }
 
     /**
@@ -45,12 +45,11 @@ public class Person {
 
     // Getters and Setters for Instance Variables
 
-
     /**
      * Retrieves the unique ID number of the person.
      * @return The ID number.
      */
-    public int getIDNum() {
+    public String getIDNum() {
         return IDNum;
     }
 
@@ -186,9 +185,16 @@ public class Person {
      * Converts the Person object to a string representation.
      * @return A string representing the Person object.
      */
+    @Override
     public String toString() {
-        return "Person [firstName=" + firstName + ", lastName=" + lastName + ", ID=" + IDNum + ", title=" + title + ", YOB=" + YOB + "]";
+        return "Person [ID=" + IDNum
+                + ", firstName=" + firstName
+                + ", lastName=" + lastName
+                + ", title=" + title
+                + ", YOB=" + YOB
+                + "]";
     }
+
 
 
     /**
@@ -204,23 +210,29 @@ public class Person {
      * @return A CSV string representation of the Person object.
      */
     public String toCSV() {
-        return firstName + "," + lastName + "," + IDNum + "," + title + "," + YOB;
+        return IDNum + "," + firstName + "," + lastName + "," + title + "," + YOB;
     }
 
 
     /**
      * Converts the Person object to a JSON string representation.
-     * The JSON structure includes: IDNum, firstName, lastName, and YOB.
+     * The JSON structure includes: IDNum, firstName, lastName, title, and YOB.
      *
      * @return A JSON string representation of the Person object.
+     *
+     * diepv Comment: Might try using Gson library for this function to remove manual quotes
      */
     public String toJSONRecord() {
         char DQ = '"';  // Double quote character
-        return "{" + DQ + "IDNum" + DQ + ":" + DQ + this.IDNum + DQ + "," +
+        return "{" +
+                DQ + "IDNum" + DQ + ":" + DQ + this.IDNum + DQ + "," +
                 DQ + "firstName" + DQ + ":" + DQ + this.firstName + DQ + "," +
                 DQ + "lastName" + DQ + ":" + DQ + this.lastName + DQ + "," +
-                DQ + "YOB" + DQ + ":" + this.YOB + "}";
+                DQ + "title" + DQ + ":" + DQ + this.title + DQ + "," +
+                DQ + "YOB" + DQ + ":" + this.YOB +
+                "}";
     }
+
 
 
     /**
@@ -231,9 +243,9 @@ public class Person {
      */
     public String toXML() {
         return "<Person>" +
+                "<ID>" + IDNum + "</ID>" +
                 "<firstName>" + firstName + "</firstName>" +
                 "<lastName>" + lastName + "</lastName>" +
-                "<ID>" + IDNum + "</ID>" +
                 "<title>" + title + "</title>" +
                 "<YOB>" + YOB + "</YOB>" +
                 "</Person>";

@@ -18,7 +18,7 @@ import static java.nio.file.StandardOpenOption.CREATE;
 
 /*
  *
- * @author wulft
+ * @author wulft snd diepv
  *
  * Use the thread safe NIO IO library to read a file
  */
