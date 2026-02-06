@@ -11,7 +11,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import static java.nio.file.StandardOpenOption.CREATE;
 import javax.swing.JFileChooser;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.nio.file.StandardOpenOption.CREATE;
 
@@ -29,6 +30,7 @@ public class PersonReader {
         File selectedFile;
         String rec;
 
+        List<Person> personList = new ArrayList<>();
         try
         {
             File workingDirectory = new File(System.getProperty("user.dir"));
@@ -57,17 +59,21 @@ public class PersonReader {
                         "ID#", " Firstname", " Lastname", " Title", "YOB"));
                 System.out.println("==============================================================");
 
-
+                // need to add error handling and exceptions
 
                 while ((rec = reader.readLine()) != null)
                 {
                     String[] fields = rec.split(",");
 
                     int id = Integer.parseInt(fields[0].trim());
-                    String fname = fields[1];
-                    String lname = fields[2];
-                    String title = fields[3];
+                    String fname = fields[1].trim();
+                    String lname = fields[2].trim();
+                    String title = fields[3].trim();
                     int yob = Integer.parseInt(fields[4].trim());
+
+                    // Create a Person object and add it to the ArrayList
+                    Person person = new Person(fname, lname, title, yob, id);
+                    personList.add(person);
 
                     String formattedRecord = String.format(
                             DATA_FORMAT,

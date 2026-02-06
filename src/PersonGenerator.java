@@ -11,7 +11,7 @@ void main() {
     boolean done = false;
 
     Scanner in = new Scanner(System.in);
-    ArrayList<String> recs = new ArrayList<>();
+    ArrayList<Person> people = new ArrayList<>();
 
     String regExPatternSixDigits = "^\\d{6}$";
 
@@ -24,14 +24,23 @@ void main() {
         title = SafeInput.getNonZeroLenString(in, "Enter the title");
         YOB = SafeInput.getRangedInt(in, "Enter the year for the age calc: ", 1000, 9999);
 
-        csvRec = ID + ", " + fName + ", " + lName + ", " + title + ", " + YOB;
-        recs.add(csvRec);
+        // Convert the ID from String to int
+        int personID;
+        try {
+            personID = Integer.parseInt(ID); // Convert the String ID to an int
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid ID format. Please enter a valid numeric ID.");
+            continue; // Skip this iteration if the ID is not a valid number
+        }
+
+        Person person = new Person(fName, lName, title,YOB,personID);
+        people.add(person);
 
         done = SafeInput.getYNConfirm(in, "Are you done");
     } while (!done);
 
     //For debugging purposes
-    for( String p: recs)
+    for( Person p: people)
         System.out.println(p);
 
     File workingDirectory = new File(System.getProperty("user.dir"));
@@ -52,9 +61,9 @@ void main() {
         BufferedWriter writer =
                 new BufferedWriter(new OutputStreamWriter(out));
 
-        for (String rec : recs) {
-            writer.write(rec, 0, rec.length());  // stupid syntax for write rec
-            // 0 is where to start (1st char) the write
+        for (Person person : people) {
+            writer.write(person.toCSV());
+
             // rec. length() is how many chars to write (all)
             writer.newLine();  // adds the new line
 
