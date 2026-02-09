@@ -51,7 +51,6 @@ public class PersonReader {
 
 
                 //I am not good at aligning stuff....
-                int line = 0;
                 final String FORMAT = "%-6s %-15s %-15s %-8s %4s";
                 final String DATA_FORMAT = "%06d %-15s %-15s %-8s %4d";
 
@@ -65,24 +64,21 @@ public class PersonReader {
                 {
                     String[] fields = rec.split(",");
 
-                    int id = Integer.parseInt(fields[0].trim());
-                    String fname = fields[1].trim();
-                    String lname = fields[2].trim();
+                    String IDNum = fields[0].trim();
+                    String firstName = fields[1].trim();
+                    String lastName = fields[2].trim();
                     String title = fields[3].trim();
-                    int yob = Integer.parseInt(fields[4].trim());
+                    int YOB = Integer.parseInt(fields[4].trim());
 
                     // Create a Person object and add it to the ArrayList
-                    Person person = new Person(fname, lname, title, yob, id);
+                    Person person = new Person(IDNum, firstName, lastName, title, YOB);
                     personList.add(person);
 
-                    String formattedRecord = String.format(
-                            DATA_FORMAT,
-                            id, fname, lname, title, yob
-                    );
-
+                    String formattedRecord = String.format(DATA_FORMAT,
+                            person.getIDNum(), person.getFirstName(), person.getLastName(),
+                            person.getTitle(), person.getYOB());
                     System.out.println(formattedRecord);
                 }
-
                 reader.close();
                 System.out.println("\n\nData file read!");
             }

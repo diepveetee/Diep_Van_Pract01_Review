@@ -27,7 +27,7 @@ public class PersonGenerator {
 
         Scanner in = new Scanner(System.in);
 
-        ArrayList<String> recs = new ArrayList<>();
+        ArrayList<Person> personList = new ArrayList<>();
 
         // Loop and collect data for the Person records into the array list
         do {
@@ -44,24 +44,18 @@ public class PersonGenerator {
             // combine them into a single csv record
             csvRec = ID + ", " + fName + ", " + lName + ", " + title + ", " + YOB;
 
-            // add it to the ArrayList
-            recs.add(csvRec);
+            // Create a Person object and add it to the list
+            Person person = new Person(ID, fName, lName, title, YOB);
+            personList.add(person);
 
             // Prompt user for additional records
             done = SafeInput.getYNConfirm(in, "Are you done");
         }while(!done);
 
-        // Add the code to save the data to disk
-
-        // uses a fixed known path:
-        //  Path file = Paths.get("c:\\My Documents\\data.txt");
-
-        // use the toolkit to get the current working directory of the IDE
-        // will create the file within the Netbeans project src folder
-        // (may need to adjust for other IDE)
-        // Not sure if the toolkit is thread safe...
         File workingDirectory = new File(System.getProperty("user.dir"));
-        Path file = Paths.get(workingDirectory.getPath() + "\\src\\Persondata.txt");
+
+        //Path file = Paths.get(workingDirectory.getPath() + "\\src\\Persondata.txt");             // Windows Filesystem
+        Path file = Paths.get(workingDirectory.getPath(), "resources", "Persondata.txt");   // Cross System Friendly
 
         try
         {
@@ -74,19 +68,14 @@ public class PersonGenerator {
 
             // Finally can write the file LOL!
 
-            for(String rec : recs)
-            {
-                writer.write(rec, 0, rec.length());  // stupid syntax for write rec
-                // 0 is where to start (1st char) the write
-                // rec. length() is how many chars to write (all)
-                writer.newLine();  // adds the new line
-
+            // Write the Person objects to the file in CSV format
+            for (Person person : personList) {
+                writer.write(person.toCSV());
+                writer.newLine();  // Add a new line after each record
             }
-            writer.close(); // must close the file to seal it and flush buffer
+            writer.close(); // Must close the file to seal it and flush the buffer
             System.out.println("Data file written!");
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
