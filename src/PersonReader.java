@@ -52,7 +52,7 @@ public class PersonReader {
 
                 //I am not good at aligning stuff....
                 final String FORMAT = "%-6s %-15s %-15s %-8s %4s";
-                final String DATA_FORMAT = "%06d %-15s %-15s %-8s %4d";
+                final String DATA_FORMAT = "%-6s %-15s %-15s %-8s %4d";
 
                 System.out.println(String.format(FORMAT,
                         "ID#", " Firstname", " Lastname", " Title", "YOB"));
@@ -60,8 +60,7 @@ public class PersonReader {
 
                 // need to add error handling and exceptions
 
-                while ((rec = reader.readLine()) != null)
-                {
+                while ((rec = reader.readLine()) != null) {
                     String[] fields = rec.split(",");
 
                     String IDNum = fields[0].trim();
@@ -74,10 +73,13 @@ public class PersonReader {
                     Person person = new Person(IDNum, firstName, lastName, title, YOB);
                     personList.add(person);
 
-                    String formattedRecord = String.format(DATA_FORMAT,
-                            person.getIDNum(), person.getFirstName(), person.getLastName(),
-                            person.getTitle(), person.getYOB());
-                    System.out.println(formattedRecord);
+                    String formattedRecord = String.format(
+                            DATA_FORMAT,
+                            IDNum, firstName, lastName, title, YOB
+                    );
+
+
+                System.out.println(formattedRecord);
                 }
                 reader.close();
                 System.out.println("\n\nData file read!");

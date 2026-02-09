@@ -9,6 +9,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.nio.file.StandardOpenOption.CREATE;
 import javax.swing.JFileChooser;
 
@@ -29,6 +32,8 @@ public class ProductWriter {
         File selectedFile;
         String rec;
 
+        List<Product> productList = new ArrayList<>();  // List to store products
+
         try
         {
             File workingDirectory = new File(System.getProperty("user.dir"));
@@ -45,7 +50,6 @@ public class ProductWriter {
                 BufferedReader reader =
                         new BufferedReader(new InputStreamReader(in));
 
-
                 int line = 0;
                 final String HEADER_FORMAT = "%-6s %-15s %-30s %-10s";
                 final String DATA_FORMAT = "%06d %-15s %-30s %-10.2f";
@@ -53,8 +57,6 @@ public class ProductWriter {
                 System.out.println(String.format(HEADER_FORMAT,
                         "ID#", " Name", " Description", "Price"));
                 System.out.println("==============================================================");
-
-
 
                 while ((rec = reader.readLine()) != null)
                 {
@@ -87,7 +89,4 @@ public class ProductWriter {
             e.printStackTrace();
         }
     }
-
-
-
 }

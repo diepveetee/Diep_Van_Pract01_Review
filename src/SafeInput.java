@@ -12,7 +12,7 @@ public class SafeInput
     * @param pipe a Scanner opened to read from System.in
     * @param prompt prompt for the user
     * @return a String response that is not zero length
-    */ 
+    */
    public static String getNonZeroLenString(Scanner pipe, String prompt)
    {
        String retString = "";
@@ -20,12 +20,10 @@ public class SafeInput
        {
            System.out.print("\n" + prompt + ": ");
            retString = pipe.nextLine();
+       }while(retString.length() == 0); // until we have some characters
 
-       }while (retString.length() == 0 || !retString.matches("[a-zA-Z.' ]+")); // until we have some characters and
-                                                                                   // check for only letters and periods.
-       
        return retString;
-       
+
    }
     /**
      * Get an int value within a specified numeric range

@@ -39,11 +39,7 @@ public class PersonGenerator {
             fName = SafeInput.getNonZeroLenString(in, "Enter the first name");
             lName = SafeInput.getNonZeroLenString(in, "Enter the last name");
             title = SafeInput.getNonZeroLenString(in, "Enter the title");
-            YOB = SafeInput.getRangedInt(in, "Enter the year for the age calc: ", 1000, 9999);
-
-            // combine them into a single csv record
-            csvRec = ID + ", " + fName + ", " + lName + ", " + title + ", " + YOB;
-
+            YOB = SafeInput.getRangedInt(in, "Enter the year for the age calc: ", 1940, 2010);
             // Create a Person object and add it to the list
             Person person = new Person(ID, fName, lName, title, YOB);
             personList.add(person);
@@ -55,7 +51,7 @@ public class PersonGenerator {
         File workingDirectory = new File(System.getProperty("user.dir"));
 
         //Path file = Paths.get(workingDirectory.getPath() + "\\src\\Persondata.txt");             // Windows Filesystem
-        Path file = Paths.get(workingDirectory.getPath(), "resources", "Persondata.txt");   // Cross System Friendly
+        Path file = Paths.get(workingDirectory.getPath(), "resources", "Persondata1.txt");   // Cross System Friendly
 
         try
         {
