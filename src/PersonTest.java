@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonTest {
 
-    Person p;
+    private Person p;
 
     @BeforeEach
     void setUp() {
