@@ -1,7 +1,3 @@
-/**
- * The Worker class represents an employee who is a worker, inheriting from the Person class.
- * It includes an hourly pay rate and methods to calculate and display weekly pay.
- */
 public class Worker extends Person {
     private double hourlyPayRate;
 
@@ -65,7 +61,6 @@ public class Worker extends Person {
     public void displayWeeklyPay(double hoursWorked) {
         double regularHours = Math.min(hoursWorked, 40);  // Regular hours
         double overtimeHours = Math.max(0, hoursWorked - 40);  // Overtime hours
-
         double regularPay = regularHours * hourlyPayRate;
         double overtimePay = overtimeHours * hourlyPayRate * 1.5;
         double totalPay = regularPay + overtimePay;

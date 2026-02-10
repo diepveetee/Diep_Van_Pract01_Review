@@ -1,61 +1,69 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.io.*;
 
 public class WorkerTest {
 
-    // Test 1: Constructor and Getter for hourlyPayRate
-    @Test
-    public void testConstructorAndGetter() {
-        // Create a Worker object
-        Worker worker = new Worker("W12345", "John", "Doe", "Mr.", 1980, 25.50);
+    private Worker worker;
 
-        // Check if the hourlyPayRate is correctly set
-        assertEquals(25.50, worker.getHourlyPayRate(), "Hourly pay rate should be 25.50");
+    @BeforeEach
+    public void setUp() {
+        worker = new Worker("W12345", "Daniel", "Guverra", "Mr.", 1980, 25.50);
     }
 
-    // Test 2: Setter for hourlyPayRate
     @Test
     public void testSetter() {
-        // Create a Worker object
-        Worker worker = new Worker("W12345", "John", "Doe", "Mr.", 1980, 25.50);
-
-        // Update the hourly pay rate
         worker.setHourlyPayRate(30.00);
-
-        // Verify the updated pay rate
         assertEquals(30.00, worker.getHourlyPayRate(), "Hourly pay rate should be updated to 30.00");
     }
 
-    // Test 3: calculateWeeklyPay() with 40 hours worked (no overtime)
     @Test
-    public void testCalculateWeeklyPay_Regular() {
-        // Create a Worker object
-        Worker worker = new Worker("W12345", "John", "Doe", "Mr.", 1980, 25.50);
-
-        // Calculate weekly pay for 40 hours (no overtime)
+    public void testCalculateWeeklyPayRegular() {
         double pay = worker.calculateWeeklyPay(40);
-
-        // Verify that the calculated pay is correct
         assertEquals(1020.00, pay, "Weekly pay for 40 hours should be 1020.00");
     }
 
-    // Test 4: calculateWeeklyPay() with overtime (more than 40 hours worked)
     @Test
-    public void testCalculateWeeklyPay_Overtime() {
-        // Create a Worker object
-        Worker worker = new Worker("W12345", "John", "Doe", "Mr.", 1980, 25.50);
-
-        // Calculate weekly pay for 45 hours (5 hours of overtime)
+    public void testCalculateWeeklyPayOvertime() {
         double pay = worker.calculateWeeklyPay(45);
-
-        // Expected pay: 40 hours at regular rate + 5 hours at 1.5x rate
         double expectedPay = (40 * 25.50) + (5 * 25.50 * 1.5);
-
-        // Verify the pay is correct
         assertEquals(expectedPay, pay, "Weekly pay for 45 hours (including overtime) is incorrect");
     }
 
-    // Test 5: displayWeeklyPay() - This would normally print, so we cannot easily test it programmatically
-    // But you could use a mocking library like Mockito to capture System.out and test that way
+    // Had to use AI to help me on this since JUnit isn't made to test displays.
+
+    @Test
+    public void testDisplayWeeklyPay() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        worker.displayWeeklyPay(45);
+
+        String expectedOutput = "Regular Hours: 40.0 x $25.5 = $1020.0\n" +
+                "Overtime Hours: 5.0 x $38.25 = $191.25\n" +
+                "Total Pay: $1211.25\n";
+
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    public void testToXML() {
+        String expectedXML = "<Person><ID>W12345</ID><firstName>Daniel</firstName><lastName>Guverra</lastName><title>Mr." +
+                "</title><YOB>1980</YOB><hourlyPayRate>25.5</hourlyPayRate></Person>";
+        assertEquals(expectedXML, worker.toXML(), "XML output Guverras not match expected format.");
+    }
+
+    @Test
+    public void testToJSONRecord() {
+        String expectedJSON = "{\"IDNum\":\"W12345\",\"firstName\":\"Daniel\",\"lastName\":\"Guverra\",\"title\":\"Mr.\",\"YOB\":1980,\"hourlyPayRate\":25.5}";
+        assertEquals(expectedJSON, worker.toJSONRecord(), "JSON output Guverras not match expected format.");
+    }
+
+    @Test
+    public void testToCSV() {
+        String expectedCSV = "W12345,Daniel,Guverra,Mr.,1980,25.5";
+        assertEquals(expectedCSV, worker.toCSV(), "CSV output Guverras not match expected format.");
+    }
 }
 
