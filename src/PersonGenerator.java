@@ -10,13 +10,6 @@ import static java.nio.file.StandardOpenOption.CREATE;
 public class PersonGenerator {
     public static void main(String[] args)
     {
-        // Person generator
-//        a.	ID (a String)
-//        b.	FirstName
-//        c.	LastName
-//        d.	Title (a string like Mr., Mrs., Ms., Dr., etc.)
-//        e.	YearOfBirth (an int)
-
         String ID = "";
         String fName = "";
         String lName = "";
@@ -74,12 +67,5 @@ public class PersonGenerator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        // Dumpt the array list for inspedction
-//        for(String rec : recs)
-//        {
-//            System.out.println(rec);
-//        }
-
     }
 }

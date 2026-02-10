@@ -47,10 +47,6 @@ public class PersonReader {
                 BufferedReader reader =
                         new BufferedReader(new InputStreamReader(in));
 
-                // Finally we can read the file LOL!
-
-
-                //I am not good at aligning stuff....
                 final String FORMAT = "%-6s %-15s %-15s %-8s %4s";
                 final String DATA_FORMAT = "%-6s %-15s %-15s %-8s %4d";
 
